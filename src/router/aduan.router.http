@@ -1,0 +1,9 @@
+POST http://localhost:3000/aduan/create
+Content-Type: application/json  
+
+{
+    "nama_pengadu": "John Doe",
+    "catatan": "Saya ingin melaporkan masalah layanan anda.",
+    "kategori_aduan": "Layanan Pelanggan",
+    "email": "john.doe@example.com"
+}
