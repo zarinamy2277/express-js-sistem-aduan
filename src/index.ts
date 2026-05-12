@@ -1,8 +1,19 @@
 import express from 'express';
 import aduanRouter from './router/aduan.router';
+import dotenv from 'dotenv';
+import morgan from 'morgan';
+import logger from './utils/logger';
+//load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const port = 3000;
+
+app.use(
+  morgan('dev', {
+    stream: { write: (message) => logger.info(message.trim()) },
+  })
+);
 
 app.use(express.json()); // Middleware untuk parsing JSON
 

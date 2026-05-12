@@ -60,4 +60,48 @@ router.post('/create', (req, res) => {
     .json({ message: 'Aduan created.', data: { id: id, ...aduan } });
 });
 
+router.get('/view/:id', (req, res) => {
+  const aduanId = req.params.id;
+
+  if (!aduanId) {
+    return res.status(400).json({ message: 'Invalid aduanId.' });
+  }
+
+  const aduan = aduans.get(aduanId);
+
+  if (!aduan) {
+    return res.status(404).json({ message: 'Aduan not found.' });
+  }
+
+  return res.json({ data: aduan });
+});
+
+
+router.patch('/update/:id', (req, res) => {
+  const aduanId = req.params.id;
+
+  if (!aduanId) {
+    return res.status(400).json({ message: 'Invalid aduanId.' }); // this is to check false, undefeined, null, empty string, etc
+  }
+
+  const existing = aduans.get(aduanId);
+
+  if (!existing) {
+    return res.status(404).json({ message: 'Aduan not found.' });
+  }
+
+  const { nama_pengadu, catatan, kategori_aduan, email } = req.body;
+
+  const updated = {
+    ...existing, // spread operator to copy existing properties
+    nama_pengadu: nama_pengadu || existing.nama_pengadu, // ternary operator to check if new value is provided, if not use existing value
+    catatan: catatan || existing.catatan,
+    kategori_aduan: kategori_aduan || existing.kategori_aduan,
+    email: email || existing.email,
+  };
+
+  aduans.set(aduanId, updated);
+  return res.json({ message: 'Aduan updated.', data: updated });
+});
+
 export default router;

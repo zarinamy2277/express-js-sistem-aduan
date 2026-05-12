@@ -7,3 +7,12 @@ Content-Type: application/json
     "kategori_aduan": "Layanan Pelanggan",
     "email": "john.doe@example.com"
 }
+
+###
+// happy path testing for update
+PATCH http://localhost:3000/aduan/update/1
+Content-Type: application/json
+
+{
+    "catatan": "Saya ingin memperbaharui catatan saya tentang masalah ini"
+}
